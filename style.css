@@ -1,0 +1,72 @@
+
+
+.selected {
+  background-color: #fcf8e3;
+
+}
+
+.cal-head th {
+  border: 2px transparent;
+  border-bottom: 1px solid #dbdbdb;
+  background-color: lightsalmon;
+ 
+
+}
+
+
+
+.td-time {
+  height: 50px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 1px solid #dbdbdb;
+  transition: 0.1s ease-in-out;
+}
+
+.td-time:hover {
+  background-color: #CAE6EF;
+  cursor: pointer;
+}
+
+.table td, .table th {
+  padding: 0;
+ 
+}
+
+table {
+  table-layout: fixed ;
+  width: 100% ;
+ 
+}
+td {
+  width: 25% ;
+  
+ 
+}
+
+
+.event {
+  font-size:12px;
+  color: white;
+  font-weight: 500;
+  padding: 5px;
+  border-bottom: 1px solid white;
+  border-radius: 6px;
+  transition: 0.1s ease-in-out;
+
+}
+
+.event:hover {
+
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
