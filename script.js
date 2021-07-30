@@ -1,5 +1,6 @@
 "use strict";
-var todaysDateHighlight = function () {
+todaysDateHighlight();
+function todaysDateHighlight() {
     var today = new Date();
     var splittedString = today.toString().split(' ');
     var eleNum;
@@ -7,8 +8,8 @@ var todaysDateHighlight = function () {
         var todayEle = document.getElementById("day-" + eleNum);
         todayEle.classList.add('selected');
     }
-};
-todaysDateHighlight();
+}
+;
 function checkMonth(currentMonth) {
     var monthEle = document.getElementById('cal-month');
     if (monthEle.textContent.includes(currentMonth)) {

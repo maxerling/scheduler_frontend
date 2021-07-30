@@ -1,4 +1,17 @@
-const todaysDateHighlight = function () {
+todaysDateHighlight();
+
+
+
+
+
+
+
+
+
+
+
+
+function todaysDateHighlight() : void {
   const today : Date  = new Date();
   const splittedString : string[] = today.toString().split(' ');
   let eleNum : number;
@@ -9,16 +22,6 @@ const todaysDateHighlight = function () {
 
  
 };
-
-todaysDateHighlight();
-
-
-
-
-
-
-
-
 
 
 
