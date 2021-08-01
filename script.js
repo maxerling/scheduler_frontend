@@ -1,17 +1,16 @@
 "use strict";
 checkCurrentWeek();
 function checkCurrentWeek() {
-    for (let i = 0; i < 1; i++) {
-        if (todaysDateHighlight()) {
-        }
-        else {
-            //moveForwardWeek()
-        }
+    while (!todaysDateHighlight()) {
         moveForwardWeek();
     }
 }
 function moveForwardWeek() {
     const eventParent = document.getElementById('event-scheduler');
+    for (let i = 1; i < 8; i++) {
+        eventParent.children[i].textContent = '';
+        eventParent.children[i].classList.remove('selected');
+    }
     const weekdayParentEle = document.getElementById('weekdays-name');
     const monthAndYearEle = document.getElementById('cal-month');
     const monthAndYearArray = monthAndYearEle?.textContent?.split(' ') ?? [];
@@ -29,7 +28,6 @@ function moveForwardWeek() {
         randDatePlusOne.setDate(randDatePlusOne.getDate() + 1);
         const dateOWFPlusOneArray = randDatePlusOne.toString().split(' ');
         weekdayParentEle.children[i + 1].textContent = `${dateOWFPlusOneArray[0].toUpperCase()} ${dateOWFPlusOneArray[2]}/${randDatePlusOne.getMonth() + 1}`;
-        eventParent.children[i].textContent = '';
     }
     //extra: change so the default date is based on current day (ex: day-1 is the closest mon)
 }
@@ -88,8 +86,10 @@ function todaysDateHighlight() {
     if ((eleNum = checkDay(splittedString[0] + ' ' + splittedString[2])) != -1) {
         const todayEle = document.getElementById(`day-${eleNum}`);
         todayEle?.classList.add('selected');
+        console.log('true');
         return true;
     }
+    console.log('false');
     return false;
 }
 ;
