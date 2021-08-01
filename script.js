@@ -1,15 +1,17 @@
 "use strict";
 checkCurrentWeek();
 function checkCurrentWeek() {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 1; i++) {
         if (todaysDateHighlight()) {
         }
         else {
-            moveForwardWeek();
+            //moveForwardWeek()
         }
+        moveForwardWeek();
     }
 }
 function moveForwardWeek() {
+    const eventParent = document.getElementById('event-scheduler');
     const weekdayParentEle = document.getElementById('weekdays-name');
     const monthAndYearEle = document.getElementById('cal-month');
     const monthAndYearArray = monthAndYearEle?.textContent?.split(' ') ?? [];
@@ -23,17 +25,17 @@ function moveForwardWeek() {
     randDateFArray[1] = randDatePlusOne.toLocaleString('default', { month: 'long' });
     weekdayParentEle.children[1].textContent = `${randDateFArray[0].toUpperCase()} ${randDateFArray[2]}/${randDatePlusOne.getMonth() + 1}`;
     monthAndYearEle.textContent = `${randDateFArray[1]} ${randDateFArray[3]}`;
-    for (let i = 2; i < 8; i++) {
+    for (let i = 1; i < 7; i++) {
         randDatePlusOne.setDate(randDatePlusOne.getDate() + 1);
         const dateOWFPlusOneArray = randDatePlusOne.toString().split(' ');
-        weekdayParentEle.children[i].textContent = `${dateOWFPlusOneArray[0].toUpperCase()} ${dateOWFPlusOneArray[2]}/${randDatePlusOne.getMonth() + 1}`;
+        weekdayParentEle.children[i + 1].textContent = `${dateOWFPlusOneArray[0].toUpperCase()} ${dateOWFPlusOneArray[2]}/${randDatePlusOne.getMonth() + 1}`;
+        eventParent.children[i].textContent = '';
     }
-    // change current mon to randDateOneWeekForward, test it with wrong dates, implement for all days with loop, 
     //extra: change so the default date is based on current day (ex: day-1 is the closest mon)
 }
 function getMonth(month) {
     if (month === 1) {
-        return 'Janary';
+        return 'January';
     }
     else if (month === 2) {
         return 'February';

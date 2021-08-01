@@ -7,60 +7,59 @@ checkCurrentWeek();
 
 
 function checkCurrentWeek() : void {
-  for (let i = 0; i < 3 ; i++) {
+  for (let i = 0; i < 1 ; i++) {
     if (todaysDateHighlight()) {
 
     } else {
-      moveForwardWeek()
+      //moveForwardWeek()
     }
 
-    
+    moveForwardWeek()
   }
-  
-
   
 }
 
 
 function moveForwardWeek() : void {
-    const weekdayParentEle  = document.getElementById('weekdays-name');
-    const monthAndYearEle = document.getElementById('cal-month');
-    const monthAndYearArray : string[] = monthAndYearEle?.textContent?.split(' ') ?? [];
-    const weekdayAndMonthArray : string[] = weekdayParentEle?.children[1]?.textContent?.split(' ') ?? [];
+  const eventParent = document.getElementById('event-scheduler');
+
+  const weekdayParentEle  = document.getElementById('weekdays-name');
+  const monthAndYearEle = document.getElementById('cal-month');
+  const monthAndYearArray : string[] = monthAndYearEle?.textContent?.split(' ') ?? [];
+  const weekdayAndMonthArray : string[] = weekdayParentEle?.children[1]?.textContent?.split(' ') ?? [];
 
 
-    const weekday : number = Number(weekdayAndMonthArray[1].substring(0,2));
-    const month : number = Number(weekdayAndMonthArray[1].substring(3))
+  const weekday : number = Number(weekdayAndMonthArray[1].substring(0,2));
+  const month : number = Number(weekdayAndMonthArray[1].substring(3))
 
-    const randDate : Date = new Date(`${getMonth(month)} ${weekday}, ${monthAndYearArray[1]}`);
-    let randDatePlusOne : Date = new Date(randDate);
-    randDatePlusOne.setDate(randDatePlusOne.getDate() + 7)
-    
-    const randDateFArray : string[] = randDatePlusOne.toString().split(' '); 
+  const randDate : Date = new Date(`${getMonth(month)} ${weekday}, ${monthAndYearArray[1]}`);
+  let randDatePlusOne : Date = new Date(randDate);
+  randDatePlusOne.setDate(randDatePlusOne.getDate() + 7)
+
+  const randDateFArray : string[] = randDatePlusOne.toString().split(' '); 
 
 
-    randDateFArray[1] = randDatePlusOne.toLocaleString('default', {month: 'long'});
-    weekdayParentEle!.children[1].textContent = `${randDateFArray[0].toUpperCase()} ${randDateFArray[2]}/${randDatePlusOne.getMonth()+1}`;
-    monthAndYearEle!.textContent! = `${randDateFArray[1]} ${randDateFArray[3]}`;
-
-    for (let i = 2; i < 8; i++) {
-      randDatePlusOne.setDate(randDatePlusOne.getDate()+1)
-      const dateOWFPlusOneArray : string[] = randDatePlusOne.toString().split(' '); 
-      weekdayParentEle!.children[i].textContent = `${dateOWFPlusOneArray[0].toUpperCase()} ${dateOWFPlusOneArray[2]}/${randDatePlusOne.getMonth()+1}`;
- 
-      
-    }
-
- 
+  randDateFArray[1] = randDatePlusOne.toLocaleString('default', {month: 'long'});
+  weekdayParentEle!.children[1].textContent = `${randDateFArray[0].toUpperCase()} ${randDateFArray[2]}/${randDatePlusOne.getMonth()+1}`;
+  monthAndYearEle!.textContent! = `${randDateFArray[1]} ${randDateFArray[3]}`;
   
-  // change current mon to randDateOneWeekForward, test it with wrong dates, implement for all days with loop, 
+  
+  for (let i = 1; i < 7; i++) {
+    randDatePlusOne.setDate(randDatePlusOne.getDate()+1)
+    const dateOWFPlusOneArray : string[] = randDatePlusOne.toString().split(' '); 
+    weekdayParentEle!.children[i+1].textContent = `${dateOWFPlusOneArray[0].toUpperCase()} ${dateOWFPlusOneArray[2]}/${randDatePlusOne.getMonth()+1}`;
+    eventParent!.children[i].textContent = '';
+    
+  }
+
+ 
   
   //extra: change so the default date is based on current day (ex: day-1 is the closest mon)
 }
 
 function getMonth(month : number) : string {
   if (month === 1) {
-    return 'Janary';
+    return 'January';
   } else if (month === 2) {
     return 'February';
   } else if (month === 3) {
