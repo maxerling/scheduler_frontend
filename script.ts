@@ -7,13 +7,16 @@ checkCurrentWeek();
 
 
 function checkCurrentWeek() : void {
-  for (let i = 0; i < 3 ; i++) {
+  for (let i = 0; i < 1 ; i++) {
     if (!todaysDateHighlight()) {
-      moveForwardWeek()
-    } 
+      //moveForwardWeek()
+    } else {
+      //moveForwardWeek()
+    }
+
+    moveForwardWeek()
+    console.log('dd')
   }
-
-
   
 
   
@@ -23,26 +26,43 @@ function checkCurrentWeek() : void {
 function moveForwardWeek() : void {
   const weekdayParentEle  = document.getElementById('weekdays-name');
   const monthAndYearEle = document.getElementById('cal-month');
-
-  const p = document.createElement("p");
-  p.textContent = "Hello, World!";
   const monthAndYearArray : string[] = monthAndYearEle?.textContent?.split(' ') ?? [];
-  const weekday : number = Number(weekdayParentEle?.children[1]?.textContent?.split(' ')[1].substring(0,2));
+  console.log(weekdayParentEle)
+  console.log(monthAndYearEle)
+  console.log(monthAndYearArray)
 
-  const randDate : Date = new Date(`${monthAndYearArray[0]} ${weekday}, ${monthAndYearArray[1]}`);
-  const randDateOneWeekForward : Date = new Date(randDate.getFullYear(),randDate.getMonth(),randDate.getDate()+7);
-  console.log(randDateOneWeekForward)
-  const dateOWFArray : string[] = randDateOneWeekForward.toString().split(' '); 
-  dateOWFArray[1] = randDateOneWeekForward.toLocaleString('default', {month: 'long'});
-  weekdayParentEle!.children[1].textContent = `${dateOWFArray[0] .toUpperCase()} ${dateOWFArray[2]}/${randDateOneWeekForward.getMonth()+1}`;
-  monthAndYearEle!.textContent! = `${dateOWFArray[1]} ${dateOWFArray[3]}` ?? '';
+  for (let i = 1; i < 8; i++) {
+    const weekday : number = Number(weekdayParentEle?.children[i]?.textContent?.split(' ')[1].substring(0,2));
+    const randDate : Date = new Date(`${monthAndYearArray[0]} ${weekday}, ${monthAndYearArray[1]}`);
+    const randDateOneWeekForward : Date = new Date(randDate.getFullYear(),randDate.getMonth(),randDate.getDate()+7);
+    const dateOWFArray : string[] = randDateOneWeekForward.toString().split(' '); 
+    dateOWFArray[1] = randDateOneWeekForward.toLocaleString('default', {month: 'long'});
+    weekdayParentEle!.children[i].textContent = `${dateOWFArray[0] .toUpperCase()} ${dateOWFArray[2]}/${randDateOneWeekForward.getMonth()+1}`;
+    monthAndYearEle!.textContent! = `${dateOWFArray[1]} ${dateOWFArray[3]}` ?? '';
+
+  }
+  
+
+  
+ 
+
+ 
   
   // change current mon to randDateOneWeekForward, test it with wrong dates, implement for all days with loop, 
   
   //extra: change so the default date is based on current day (ex: day-1 is the closest mon)
 }
 
+function calenderButtonNext() : void => {
+  const nextButton = document.getElementById('cal-next');
+  nextButton.addEventListener('click', () => {
+    
+  });
+  const today = new Date();
+  const nextWeek = new Date(today.getFullYear(),today.getMonth(),today.getDate()+7);
+  console.log(nextWeek);
 
+};
 
 
 function todaysDateHighlight() : boolean {
