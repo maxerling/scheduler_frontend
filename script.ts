@@ -53,9 +53,9 @@ function moveForwardWeek() : void {
   //extra: change so the default date is based on current day (ex: day-1 is the closest mon)
 }
 
-function calenderButtonNext() : void => {
+function calenderButtonNext() : void {
   const nextButton = document.getElementById('cal-next');
-  nextButton.addEventListener('click', () => {
+  nextButton?.addEventListener('click', () => {
     
   });
   const today = new Date();

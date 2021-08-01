@@ -31,9 +31,9 @@ function moveForwardWeek() {
     // change current mon to randDateOneWeekForward, test it with wrong dates, implement for all days with loop, 
     //extra: change so the default date is based on current day (ex: day-1 is the closest mon)
 }
-{
+function calenderButtonNext() {
     const nextButton = document.getElementById('cal-next');
-    nextButton.addEventListener('click', () => {
+    nextButton?.addEventListener('click', () => {
     });
     const today = new Date();
     const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
