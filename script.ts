@@ -1,14 +1,14 @@
 
 checkCurrentWeek();
 
-
+setupCalenderButtons()
 
 
 
 
 function checkCurrentWeek() : void {
   while (!todaysDateHighlight()) {
-    moveForwardWeek()
+    moveWeek(7)
   }
 
 
@@ -17,7 +17,8 @@ function checkCurrentWeek() : void {
 }
 
 
-function moveForwardWeek() : void {
+function moveWeek(weekAmount : number) : void {
+
   const eventParent = document.getElementById('event-scheduler');
 
   for (let i = 1; i < 8; i++) {
@@ -35,7 +36,7 @@ function moveForwardWeek() : void {
 
   const randDate : Date = new Date(`${getMonth(month)} ${weekday}, ${monthAndYearArray[1]}`);
   let randDatePlusOne : Date = new Date(randDate);
-  randDatePlusOne.setDate(randDatePlusOne.getDate() + 7)
+  randDatePlusOne.setDate(randDatePlusOne.getDate() + weekAmount)
 
   const randDateFArray : string[] = randDatePlusOne.toString().split(' '); 
 
@@ -90,14 +91,19 @@ function getMonth(month : number) : string {
 
 }
 
-function calenderButtonNext() : void {
-  const nextButton = document.getElementById('cal-next');
-  nextButton?.addEventListener('click', () => {
-    
+function setupCalenderButtons() {
+  const nextButton = document.getElementById('cal-next')!
+  const prevButton = document.getElementById('cal-prev')!; 
+  calenderButton(nextButton, 7);
+  calenderButton(prevButton, -7);
+}
+
+function calenderButton(button : HTMLElement, weekAmount : number) : void {
+
+  button?.addEventListener('click', () => {
+    moveWeek(weekAmount)
+    todaysDateHighlight()
   });
-  const today = new Date();
-  const nextWeek = new Date(today.getFullYear(),today.getMonth(),today.getDate()+7);
-  console.log(nextWeek);
 
 };
 
@@ -109,10 +115,9 @@ function todaysDateHighlight() : boolean {
   if ((eleNum = checkDay(splittedString[0] + ' ' + splittedString[2])) != -1) {
     const todayEle = document.getElementById(`day-${eleNum}`);
     todayEle?.classList.add('selected')
-    console.log('true')
+    
     return true;
   }
-  console.log('false')
   return false;
  
 };

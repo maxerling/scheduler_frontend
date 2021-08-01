@@ -1,11 +1,12 @@
 "use strict";
 checkCurrentWeek();
+setupCalenderButtons();
 function checkCurrentWeek() {
     while (!todaysDateHighlight()) {
-        moveForwardWeek();
+        moveWeek(7);
     }
 }
-function moveForwardWeek() {
+function moveWeek(weekAmount) {
     const eventParent = document.getElementById('event-scheduler');
     for (let i = 1; i < 8; i++) {
         eventParent.children[i].textContent = '';
@@ -19,7 +20,7 @@ function moveForwardWeek() {
     const month = Number(weekdayAndMonthArray[1].substring(3));
     const randDate = new Date(`${getMonth(month)} ${weekday}, ${monthAndYearArray[1]}`);
     let randDatePlusOne = new Date(randDate);
-    randDatePlusOne.setDate(randDatePlusOne.getDate() + 7);
+    randDatePlusOne.setDate(randDatePlusOne.getDate() + weekAmount);
     const randDateFArray = randDatePlusOne.toString().split(' ');
     randDateFArray[1] = randDatePlusOne.toLocaleString('default', { month: 'long' });
     weekdayParentEle.children[1].textContent = `${randDateFArray[0].toUpperCase()} ${randDateFArray[2]}/${randDatePlusOne.getMonth() + 1}`;
@@ -70,13 +71,17 @@ function getMonth(month) {
     }
     return '';
 }
-function calenderButtonNext() {
+function setupCalenderButtons() {
     const nextButton = document.getElementById('cal-next');
-    nextButton?.addEventListener('click', () => {
+    const prevButton = document.getElementById('cal-prev');
+    calenderButton(nextButton, 7);
+    calenderButton(prevButton, -7);
+}
+function calenderButton(button, weekAmount) {
+    button?.addEventListener('click', () => {
+        moveWeek(weekAmount);
+        todaysDateHighlight();
     });
-    const today = new Date();
-    const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
-    console.log(nextWeek);
 }
 ;
 function todaysDateHighlight() {
@@ -86,10 +91,8 @@ function todaysDateHighlight() {
     if ((eleNum = checkDay(splittedString[0] + ' ' + splittedString[2])) != -1) {
         const todayEle = document.getElementById(`day-${eleNum}`);
         todayEle?.classList.add('selected');
-        console.log('true');
         return true;
     }
-    console.log('false');
     return false;
 }
 ;
