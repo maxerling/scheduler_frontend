@@ -119,15 +119,7 @@ function todaysDateHighlight() : boolean {
 
 
 
-function checkMonth(currentMonth : string) : boolean {
-  const monthEle = document.getElementById('cal-month');
-  if (monthEle?.textContent!.includes(currentMonth)) {
-    return true;
-  }
 
-  return false;
-
-};
 function checkDay(currentDay : string) : number {
   const currentWeek : string[] = document?.querySelector('.cal-head')?.childNodes[1]?.textContent?.split(`\n`) ?? [];
   for (let i : number = 0; i < currentWeek.length; i++) {

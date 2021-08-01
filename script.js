@@ -93,14 +93,6 @@ function todaysDateHighlight() {
     return false;
 }
 ;
-function checkMonth(currentMonth) {
-    const monthEle = document.getElementById('cal-month');
-    if (monthEle?.textContent.includes(currentMonth)) {
-        return true;
-    }
-    return false;
-}
-;
 function checkDay(currentDay) {
     const currentWeek = document?.querySelector('.cal-head')?.childNodes[1]?.textContent?.split(`\n`) ?? [];
     for (let i = 0; i < currentWeek.length; i++) {
