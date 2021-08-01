@@ -7,15 +7,14 @@ checkCurrentWeek();
 
 
 function checkCurrentWeek() : void {
-  for (let i = 0; i < 1 ; i++) {
+  for (let i = 0; i < 2 ; i++) {
     if (!todaysDateHighlight()) {
-      //moveForwardWeek()
+
     } else {
-      //moveForwardWeek()
+      
     }
 
     moveForwardWeek()
-    console.log('dd')
   }
   
 
@@ -24,27 +23,33 @@ function checkCurrentWeek() : void {
 
 
 function moveForwardWeek() : void {
-  const weekdayParentEle  = document.getElementById('weekdays-name');
-  const monthAndYearEle = document.getElementById('cal-month');
-  const monthAndYearArray : string[] = monthAndYearEle?.textContent?.split(' ') ?? [];
-  console.log(weekdayParentEle)
-  console.log(monthAndYearEle)
-  console.log(monthAndYearArray)
+    const weekdayParentEle  = document.getElementById('weekdays-name');
+    const monthAndYearEle = document.getElementById('cal-month');
+    const monthAndYearArray : string[] = monthAndYearEle?.textContent?.split(' ') ?? [];
+    const weekdayAndMonthArray : string[] = weekdayParentEle?.children[1]?.textContent?.split(' ') ?? [];
 
-  for (let i = 1; i < 8; i++) {
-    const weekday : number = Number(weekdayParentEle?.children[i]?.textContent?.split(' ')[1].substring(0,2));
+
+    const weekday : number = Number(weekdayAndMonthArray[1].substring(0,2));
+    //const month : number = Number(weekdayAndMonthArray[1].substring(3))
+
     const randDate : Date = new Date(`${monthAndYearArray[0]} ${weekday}, ${monthAndYearArray[1]}`);
-    const randDateOneWeekForward : Date = new Date(randDate.getFullYear(),randDate.getMonth(),randDate.getDate()+7);
-    const dateOWFArray : string[] = randDateOneWeekForward.toString().split(' '); 
-    dateOWFArray[1] = randDateOneWeekForward.toLocaleString('default', {month: 'long'});
-    weekdayParentEle!.children[i].textContent = `${dateOWFArray[0] .toUpperCase()} ${dateOWFArray[2]}/${randDateOneWeekForward.getMonth()+1}`;
-    monthAndYearEle!.textContent! = `${dateOWFArray[1]} ${dateOWFArray[3]}` ?? '';
+    console.log(randDate)
+    let randDatePlusOne : Date = new Date(randDate);
+    randDatePlusOne.setDate(randDate.getDate())
 
-  }
-  
+    const randDateFArray : string[] = randDate.toString().split(' '); 
 
-  
+    randDateFArray[1] = randDatePlusOne.toLocaleString('default', {month: 'long'});
+    weekdayParentEle!.children[1].textContent = `${randDateFArray[0].toUpperCase()} ${randDateFArray[2]}/${randDate.getMonth()+1}`;
+    monthAndYearEle!.textContent! = `${randDateFArray[1]} ${randDateFArray[3]}`;
+
+    for (let i = 2; i < 8; i++) {
+      randDatePlusOne.setDate(randDatePlusOne.getDate()+1)
+      const dateOWFPlusOneArray : string[] = randDatePlusOne.toString().split(' '); 
+      weekdayParentEle!.children[i].textContent = `${dateOWFPlusOneArray[0].toUpperCase()} ${dateOWFPlusOneArray[2]}/${randDatePlusOne.getMonth()+1}`;
  
+      
+    }
 
  
   
@@ -69,7 +74,7 @@ function todaysDateHighlight() : boolean {
   const today : Date  = new Date();
   const splittedString : string[] = today.toString().split(' ');
   let eleNum : number;
-  if (checkMonth(splittedString[1]) && ( (eleNum = checkDay(splittedString[0] + ' ' + splittedString[2])) != -1)) {
+  if ((eleNum = checkDay(splittedString[0] + ' ' + splittedString[2])) != -1) {
     const todayEle = document.getElementById(`day-${eleNum}`);
     todayEle?.classList.add('selected')
     return true;
