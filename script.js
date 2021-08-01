@@ -1,12 +1,12 @@
 "use strict";
 checkCurrentWeek();
 function checkCurrentWeek() {
-    for (let i = 0; i < 2; i++) {
-        if (!todaysDateHighlight()) {
+    for (let i = 0; i < 3; i++) {
+        if (todaysDateHighlight()) {
         }
         else {
+            moveForwardWeek();
         }
-        moveForwardWeek();
     }
 }
 function moveForwardWeek() {
@@ -15,14 +15,13 @@ function moveForwardWeek() {
     const monthAndYearArray = monthAndYearEle?.textContent?.split(' ') ?? [];
     const weekdayAndMonthArray = weekdayParentEle?.children[1]?.textContent?.split(' ') ?? [];
     const weekday = Number(weekdayAndMonthArray[1].substring(0, 2));
-    //const month : number = Number(weekdayAndMonthArray[1].substring(3))
-    const randDate = new Date(`${monthAndYearArray[0]} ${weekday}, ${monthAndYearArray[1]}`);
-    console.log(randDate);
+    const month = Number(weekdayAndMonthArray[1].substring(3));
+    const randDate = new Date(`${getMonth(month)} ${weekday}, ${monthAndYearArray[1]}`);
     let randDatePlusOne = new Date(randDate);
-    randDatePlusOne.setDate(randDate.getDate());
-    const randDateFArray = randDate.toString().split(' ');
+    randDatePlusOne.setDate(randDatePlusOne.getDate() + 7);
+    const randDateFArray = randDatePlusOne.toString().split(' ');
     randDateFArray[1] = randDatePlusOne.toLocaleString('default', { month: 'long' });
-    weekdayParentEle.children[1].textContent = `${randDateFArray[0].toUpperCase()} ${randDateFArray[2]}/${randDate.getMonth() + 1}`;
+    weekdayParentEle.children[1].textContent = `${randDateFArray[0].toUpperCase()} ${randDateFArray[2]}/${randDatePlusOne.getMonth() + 1}`;
     monthAndYearEle.textContent = `${randDateFArray[1]} ${randDateFArray[3]}`;
     for (let i = 2; i < 8; i++) {
         randDatePlusOne.setDate(randDatePlusOne.getDate() + 1);
@@ -31,6 +30,45 @@ function moveForwardWeek() {
     }
     // change current mon to randDateOneWeekForward, test it with wrong dates, implement for all days with loop, 
     //extra: change so the default date is based on current day (ex: day-1 is the closest mon)
+}
+function getMonth(month) {
+    if (month === 1) {
+        return 'Janary';
+    }
+    else if (month === 2) {
+        return 'February';
+    }
+    else if (month === 3) {
+        return 'March';
+    }
+    else if (month === 4) {
+        return 'April';
+    }
+    else if (month === 5) {
+        return 'May';
+    }
+    else if (month === 6) {
+        return 'June';
+    }
+    else if (month === 7) {
+        return 'July';
+    }
+    else if (month === 8) {
+        return 'August';
+    }
+    else if (month === 9) {
+        return 'September';
+    }
+    else if (month === 10) {
+        return 'October';
+    }
+    else if (month === 11) {
+        return 'November';
+    }
+    else if (month === 12) {
+        return 'December';
+    }
+    return '';
 }
 function calenderButtonNext() {
     const nextButton = document.getElementById('cal-next');
