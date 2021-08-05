@@ -42,6 +42,9 @@ async function getAllEvents() {
                     const timeEle = document.createElement('h6');
                     timeEle.textContent = `${start_time}-${end_time}`;
                     nameEle.textContent = `${name}`;
+                    const timePositionAttArray = timePosition(start_time, end_time);
+                    eventEle.style.top = `${timePositionAttArray[0]}px`;
+                    eventEle.style.height = `${timePositionAttArray[1]}px`;
                     eventEle.append(nameEle);
                     eventEle.append(timeEle);
                     eventCollectionEle?.append(eventEle);
@@ -53,6 +56,14 @@ async function getAllEvents() {
 function welcomeMessage(loggedUser) {
     let welcomeMessage = document.getElementById('welcome-message');
     welcomeMessage.textContent = `Welcome ${loggedUser.first_name}` ?? '';
+}
+function timePosition(startTime, endTime) {
+    let startAndEndAttr = [];
+    startAndEndAttr.push((151 + (Number(startTime.substr(0, 2).replace('0', '')) - 4) * 50.198).toString());
+    console.log();
+    startAndEndAttr.push(((Number(endTime.substr(0, 2).replace('0', '')) - Number(startTime.substr(0, 2).replace('0', ''))) * 50.198).toString());
+    console.log(startAndEndAttr);
+    return startAndEndAttr;
 }
 function checkCurrentWeek() {
     while (!todaysDateHighlight()) {

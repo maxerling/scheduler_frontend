@@ -62,10 +62,11 @@ async function getAllEvents() : Promise<void> {
         if ((getMonth(Number(splittedEventDate[1][1])) === splittedMonthAndYear[0] && splittedEventDate[0] === splittedMonthAndYear[1] )) {
           console.log(event)
           for (let i = 0; i < 7; i++) {
-            if (weekdayParentEle!.children[i+1].textContent?.includes(eventDateWeekend) {
+            if (weekdayParentEle!.children[i+1].textContent?.includes(eventDateWeekend)) {
               const eventCollectionEle = document.getElementById(`day-${i+1}`);
               const eventEle = document.createElement('div');
               eventEle.classList.add('event');
+              
               eventEle.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
               eventEle.style.height = '50.198px'
               const name = event.name;
@@ -76,16 +77,14 @@ async function getAllEvents() : Promise<void> {
               const timeEle = document.createElement('h6') 
               timeEle.textContent = `${start_time}-${end_time}`;
               nameEle.textContent = `${name}`
-              
-
-
-
+              const timePositionAttArray = timePosition(start_time, end_time);
+              eventEle.style.top = `${timePositionAttArray[0]}px`
+              eventEle.style.height = `${timePositionAttArray[1]}px`
 
               
               eventEle.append(nameEle);
               eventEle.append(timeEle);
-            
-              
+
               eventCollectionEle?.append(eventEle)
             }
             
@@ -103,6 +102,15 @@ function welcomeMessage(loggedUser : User) : void {
   welcomeMessage!.textContent = `Welcome ${loggedUser.first_name}` ?? '';
 }
 
+function timePosition(startTime : string, endTime : string ) : string[] {
+  let startAndEndAttr : string[] = [];
+  
+  startAndEndAttr.push((151+(Number(startTime.substr(0,2).replace('0',''))-4)*50.198).toString());
+  console.log();
+  startAndEndAttr.push(((Number(endTime.substr(0,2).replace('0',''))-Number(startTime.substr(0,2).replace('0','')))*50.198).toString())
+  console.log(startAndEndAttr)
+  return startAndEndAttr
+}
 
 function checkCurrentWeek() : void {
   while (!todaysDateHighlight()) {

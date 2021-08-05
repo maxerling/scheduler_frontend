@@ -53,6 +53,8 @@ td {
   border-bottom: 1px solid white;
   border-radius: 6px;
   transition: 0.1s ease-in-out;
+  position: absolute;
+  width: 14em;
 
 }
 
