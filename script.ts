@@ -51,9 +51,48 @@ async function getAllEvents() : Promise<void> {
       }).then(response => response.json())
       .then(data => loggedUser = data[0])
       .catch((err) => console.log(err));
+
       console.log(loggedUser);
       loggedUser.bookedAppointments.map((event : BookingAppointments) : void => {
-        console.log(event.date)
+        const weekdayParentEle = document.getElementById('weekdays-name');
+        const monthAndYearEle = document.getElementById('cal-month');
+        let splittedEventDate : string[] = event.date.split('-');
+        let splittedMonthAndYear : string[] = monthAndYearEle?.textContent?.split(' ') ?? [];
+        let eventDateWeekend = `${splittedEventDate[2]}/${splittedEventDate[1][1]}`;
+        if ((getMonth(Number(splittedEventDate[1][1])) === splittedMonthAndYear[0] && splittedEventDate[0] === splittedMonthAndYear[1] )) {
+          console.log(event)
+          for (let i = 0; i < 7; i++) {
+            if (weekdayParentEle!.children[i+1].textContent?.includes(eventDateWeekend) {
+              const eventCollectionEle = document.getElementById(`day-${i+1}`);
+              const eventEle = document.createElement('div');
+              eventEle.classList.add('event');
+              eventEle.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+              eventEle.style.height = '50.198px'
+              const name = event.name;
+              const description = event.description;
+              const start_time = event.start_time;
+              const end_time = event.end_time;
+              const nameEle = document.createElement('p');
+              const timeEle = document.createElement('h6') 
+              timeEle.textContent = `${start_time}-${end_time}`;
+              nameEle.textContent = `${name}`
+              
+
+
+
+
+              
+              eventEle.append(nameEle);
+              eventEle.append(timeEle);
+            
+              
+              eventCollectionEle?.append(eventEle)
+            }
+            
+          }
+
+        }
+
       }); 
       
 
