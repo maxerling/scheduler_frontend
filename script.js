@@ -1,6 +1,32 @@
 "use strict";
-checkCurrentWeek();
-setupCalenderButtons();
+/* GLOBAL */
+var loggedUser;
+/* ---- */
+setup();
+async function setup() {
+    checkCurrentWeek();
+    setupCalenderButtons();
+    await getAllEvents();
+    welcomeMessage(loggedUser);
+}
+async function getAllEvents() {
+    await fetch('./users.json', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json())
+        .then(data => loggedUser = data[0])
+        .catch((err) => console.log(err));
+    console.log(loggedUser);
+    loggedUser.bookedAppointments.map((event) => {
+        console.log(event.date);
+    });
+}
+function welcomeMessage(loggedUser) {
+    let welcomeMessage = document.getElementById('welcome-message');
+    welcomeMessage.textContent = `Welcome ${loggedUser.first_name}` ?? '';
+}
 function checkCurrentWeek() {
     while (!todaysDateHighlight()) {
         moveWeek(7);

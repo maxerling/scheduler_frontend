@@ -1,9 +1,68 @@
 
-checkCurrentWeek();
 
-setupCalenderButtons()
+interface User {
+  id : number;
+  username: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  role: string;
+  active: boolean;
+  bookedAppointments: BookingAppointments[];
+  date: string;
+
+}
 
 
+interface BookingAppointments {
+  id: number;
+  name: string;
+  description: string;
+  start_time : string;
+  end_time : string;
+  date: string;
+}
+
+
+/* GLOBAL */
+var loggedUser : User;
+
+
+/* ---- */
+
+setup()
+
+async function setup() {
+
+  checkCurrentWeek();
+  setupCalenderButtons()
+  await getAllEvents();
+  welcomeMessage(loggedUser);
+}
+
+
+async function getAllEvents() : Promise<void> {
+   await fetch('./users.json', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+          
+        }
+      }).then(response => response.json())
+      .then(data => loggedUser = data[0])
+      .catch((err) => console.log(err));
+      console.log(loggedUser);
+      loggedUser.bookedAppointments.map((event : BookingAppointments) : void => {
+        console.log(event.date)
+      }); 
+      
+
+}
+
+function welcomeMessage(loggedUser : User) : void {
+  let welcomeMessage = document.getElementById('welcome-message');
+  welcomeMessage!.textContent = `Welcome ${loggedUser.first_name}` ?? '';
+}
 
 
 function checkCurrentWeek() : void {
@@ -15,6 +74,7 @@ function checkCurrentWeek() : void {
   
   
 }
+
 
 
 function moveWeek(weekAmount : number) : void {
