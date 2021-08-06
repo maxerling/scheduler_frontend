@@ -4,12 +4,13 @@ var loggedUser;
 /* ---- */
 setup();
 async function setup() {
+    await getData();
     checkCurrentWeek();
     setupCalenderButtons();
-    await getAllEvents();
+    createEventElements();
     welcomeMessage(loggedUser);
 }
-async function getAllEvents() {
+async function getData() {
     await fetch('./users.json', {
         method: 'GET',
         headers: {
@@ -18,7 +19,8 @@ async function getAllEvents() {
     }).then(response => response.json())
         .then(data => loggedUser = data[0])
         .catch((err) => console.log(err));
-    console.log(loggedUser);
+}
+async function createEventElements() {
     loggedUser.bookedAppointments.map((event) => {
         const weekdayParentEle = document.getElementById('weekdays-name');
         const monthAndYearEle = document.getElementById('cal-month');
@@ -26,7 +28,6 @@ async function getAllEvents() {
         let splittedMonthAndYear = monthAndYearEle?.textContent?.split(' ') ?? [];
         let eventDateWeekend = `${splittedEventDate[2]}/${splittedEventDate[1][1]}`;
         if ((getMonth(Number(splittedEventDate[1][1])) === splittedMonthAndYear[0] && splittedEventDate[0] === splittedMonthAndYear[1])) {
-            console.log(event);
             for (let i = 0; i < 7; i++) {
                 if (weekdayParentEle.children[i + 1].textContent?.includes(eventDateWeekend)) {
                     const eventCollectionEle = document.getElementById(`day-${i + 1}`);
@@ -59,9 +60,9 @@ function welcomeMessage(loggedUser) {
 }
 function timePosition(startTime, endTime) {
     let startAndEndAttr = [];
-    startAndEndAttr.push((151 + (Number(startTime.substr(0, 2).replace('0', '')) - 4) * 50.198).toString());
+    startAndEndAttr.push((151 + (Number(startTime.substr(0, 2).replace('0', '')) - 4) * 50.2).toString());
     console.log();
-    startAndEndAttr.push(((Number(endTime.substr(0, 2).replace('0', '')) - Number(startTime.substr(0, 2).replace('0', ''))) * 50.198).toString());
+    startAndEndAttr.push(((Number(endTime.substr(0, 2).replace('0', '')) - Number(startTime.substr(0, 2).replace('0', ''))) * 51).toString());
     console.log(startAndEndAttr);
     return startAndEndAttr;
 }
@@ -94,6 +95,7 @@ function moveWeek(weekAmount) {
         const dateOWFPlusOneArray = randDatePlusOne.toString().split(' ');
         weekdayParentEle.children[i + 1].textContent = `${dateOWFPlusOneArray[0].toUpperCase()} ${dateOWFPlusOneArray[2]}/${randDatePlusOne.getMonth() + 1}`;
     }
+    createEventElements();
     //extra: change so the default date is based on current day (ex: day-1 is the closest mon)
 }
 function getMonth(month) {
