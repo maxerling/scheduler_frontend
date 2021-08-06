@@ -68,10 +68,8 @@ function timePosition(startTime, endTime) {
     else if (endTimeValue == '00') {
         endTimeValue = '24';
     }
-    startAndEndAttr.push((151 + (Number(startTimeValue.replace('0', '')) - 4) * 50.2).toString());
-    console.log();
+    startAndEndAttr.push((151 + (Number(startTimeValue.replace('0', '')) - 4) * 50).toString());
     startAndEndAttr.push(((Number(endTimeValue.substr(0, 2).replace('0', '')) - Number(startTime.substr(0, 2).replace('0', ''))) * 51).toString());
-    console.log(startAndEndAttr);
     return startAndEndAttr;
 }
 function checkCurrentWeek() {
