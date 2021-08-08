@@ -87,6 +87,9 @@ async function createEventElements() : Promise<void> {
               eventEle.append(nameEle);
               eventEle.append(timeEle);
 
+              addModal(event, eventEle)
+              onClickEvent(event, eventEle)
+
               eventCollectionEle?.append(eventEle)
             }
             
@@ -96,6 +99,35 @@ async function createEventElements() : Promise<void> {
 
       }); 
       
+
+}
+
+function onClickEvent(event : BookingAppointments, eventEle : HTMLDivElement) {
+  eventEle.addEventListener('click',() => {
+    
+  })
+}
+
+
+
+function addModal(event : BookingAppointments, eventEle : HTMLDivElement) {
+  const modalClasses = ['modal','modal-background','modal-content','modal-close'];
+  for (let i = 0; i < modalClasses.length; i++) {
+    const div = document.createElement('div');
+    div.classList.add(modalClasses[i]);
+
+    if (modalClasses[i] != 'modal') {
+      const parentEle = document.getElementsByClassName(modalClasses[0])
+      for (let j = 0; j < parentEle.length; j++) {
+        parentEle[j].append(div);
+      }
+    } else {
+      eventEle.append(div)
+    }
+
+    
+    
+  }
 
 }
 
