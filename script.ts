@@ -36,7 +36,6 @@ async function setup() {
   await getData();
   checkCurrentWeek();
   setupCalenderButtons()
-  createEventElements();
   welcomeMessage(loggedUser);
 }
 
@@ -70,7 +69,7 @@ async function createEventElements() : Promise<void> {
               const eventEle = document.createElement('div');
               eventEle.classList.add('event');
               
-              eventEle.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+              eventEle.style.backgroundColor = '#000';
               eventEle.style.height = '50.198px'
               const name = event.name;
               const description = event.description;
@@ -116,6 +115,7 @@ function timePosition(startTime : string, endTime : string ) : string[] {
     endTimeValue = '24'
   }
   startAndEndAttr.push((151+(Number(startTimeValue.replace('0',''))-4)*50).toString());
+  console.log();
   startAndEndAttr.push(((Number(endTimeValue.substr(0,2).replace('0',''))-Number(startTime.substr(0,2).replace('0','')))*51).toString())
   return startAndEndAttr
 }
