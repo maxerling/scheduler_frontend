@@ -52,7 +52,7 @@ td {
   padding: 5px;
   border-bottom: 1px solid white;
   border-radius: 6px;
-  transition: 0.4s ease-in-out;
+  transition: 0.35s ease-in-out;
   position: absolute;
   width: 12%;
   background-color:maroon;
@@ -61,11 +61,15 @@ td {
 
 .event:hover {
   cursor: pointer;
-  background-color:white;
   -webkit-transform: scale(1.05);
   -ms-transform: scale(1.05);
-  transform: scale(1.05);
+  transform: scale(1.05); 
 }
+
+.event .modal-backgorund {
+  background-color:white;
+}
+
 
 
 

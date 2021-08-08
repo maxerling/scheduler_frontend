@@ -87,14 +87,13 @@ async function createEventElements() : Promise<void> {
               eventEle.append(nameEle);
               eventEle.append(timeEle);
 
-              addModal(event, eventEle)
-              onClickEvent(event, eventEle)
-
+            
               eventCollectionEle?.append(eventEle)
+              
+              onClickEvent(event, eventEle)
             }
             
           }
-
         }
 
       }); 
@@ -103,31 +102,16 @@ async function createEventElements() : Promise<void> {
 }
 
 function onClickEvent(event : BookingAppointments, eventEle : HTMLDivElement) {
-  eventEle.addEventListener('click',() => {
+    const bodyEle = document.body;
+    const modalEle = document.getElementsByClassName('modal')[0];
+    const modalCardHeadEle = document.getElementsByClassName('modal-card')[0].children[0]
+    const modalCardBodyEle = document.getElementsByClassName('modal-card')[0].children[1]
+    console.log()
     
-  })
-}
-
-
-
-function addModal(event : BookingAppointments, eventEle : HTMLDivElement) {
-  const modalClasses = ['modal','modal-background','modal-content','modal-close'];
-  for (let i = 0; i < modalClasses.length; i++) {
-    const div = document.createElement('div');
-    div.classList.add(modalClasses[i]);
-
-    if (modalClasses[i] != 'modal') {
-      const parentEle = document.getElementsByClassName(modalClasses[0])
-      for (let j = 0; j < parentEle.length; j++) {
-        parentEle[j].append(div);
-      }
-    } else {
-      eventEle.append(div)
-    }
+    eventEle.addEventListener('click',() => {modalEle.classList.add('is-active');} );
+    modalCardHeadEle.children[1].addEventListener('click',() => modalEle.classList.remove('is-active'));
 
     
-    
-  }
 
 }
 
@@ -147,7 +131,6 @@ function timePosition(startTime : string, endTime : string ) : string[] {
     endTimeValue = '24'
   }
   startAndEndAttr.push((151+(Number(startTimeValue.replace('0',''))-4)*50).toString());
-  console.log();
   startAndEndAttr.push(((Number(endTimeValue.substr(0,2).replace('0',''))-Number(startTime.substr(0,2).replace('0','')))*51).toString())
   return startAndEndAttr
 }
