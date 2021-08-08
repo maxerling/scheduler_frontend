@@ -60,7 +60,13 @@ function onClickEvent(event, eventEle) {
     const modalCardHeadEle = document.getElementsByClassName('modal-card')[0].children[0];
     const modalCardBodyEle = document.getElementsByClassName('modal-card')[0].children[1];
     console.log();
-    eventEle.addEventListener('click', () => { modalEle.classList.add('is-active'); });
+    eventEle.addEventListener('click', () => {
+        modalCardHeadEle.children[0].textContent = event.name;
+        modalCardBodyEle.children[0].firstChild.textContent = `${event.start_time}-${event.end_time}`;
+        modalCardBodyEle.children[0].lastChild.textContent = `${event.date}`;
+        modalCardBodyEle.children[1].textContent = `${event.description}`;
+        modalEle.classList.add('is-active');
+    });
     modalCardHeadEle.children[1].addEventListener('click', () => modalEle.classList.remove('is-active'));
 }
 function welcomeMessage(loggedUser) {
