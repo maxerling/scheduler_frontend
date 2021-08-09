@@ -20,15 +20,17 @@ async function getData() {
         .then(data => loggedUser = data[0])
         .catch((err) => console.log(err));
 }
+////.addEventListener('click',() => modalEle.classList.remove('is-active'));
 function onClickTime() {
     const timeTable = document.getElementsByClassName('td-time');
     const modalEle = document.getElementsByClassName('modal')[1];
-    console.log(timeTable);
+    const closeButton = document.getElementsByClassName('delete');
     for (let i = 0; i < timeTable.length; i++) {
         timeTable[i].addEventListener('click', () => {
             modalEle.classList.add('is-active');
         });
     }
+    closeButton[1].addEventListener('click', () => modalEle.classList.remove('is-active'));
 }
 function addEventModal() {
 }
