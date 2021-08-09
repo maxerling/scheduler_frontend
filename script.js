@@ -8,6 +8,7 @@ async function setup() {
     checkCurrentWeek();
     setupCalenderButtons();
     welcomeMessage(loggedUser);
+    onClickTime();
 }
 async function getData() {
     await fetch('./users.json', {
@@ -18,6 +19,18 @@ async function getData() {
     }).then(response => response.json())
         .then(data => loggedUser = data[0])
         .catch((err) => console.log(err));
+}
+function onClickTime() {
+    const timeTable = document.getElementsByClassName('td-time');
+    const modalEle = document.getElementsByClassName('modal')[1];
+    console.log(timeTable);
+    for (let i = 0; i < timeTable.length; i++) {
+        timeTable[i].addEventListener('click', () => {
+            modalEle.classList.add('is-active');
+        });
+    }
+}
+function addEventModal() {
 }
 async function createEventElements() {
     loggedUser.bookedAppointments.map((event) => {
@@ -55,7 +68,6 @@ async function createEventElements() {
     });
 }
 function onClickEvent(event, eventEle) {
-    const bodyEle = document.body;
     const modalEle = document.getElementsByClassName('modal')[0];
     const modalCardHeadEle = document.getElementsByClassName('modal-card')[0].children[0];
     const modalCardBodyEle = document.getElementsByClassName('modal-card')[0].children[1];
