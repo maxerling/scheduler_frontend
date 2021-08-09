@@ -8,7 +8,7 @@ async function setup() {
     checkCurrentWeek();
     setupCalenderButtons();
     welcomeMessage(loggedUser);
-    onClickTime();
+    onClickTimeAddEvent();
 }
 async function getData() {
     await fetch('./users.json', {
@@ -20,13 +20,17 @@ async function getData() {
         .then(data => loggedUser = data[0])
         .catch((err) => console.log(err));
 }
-////.addEventListener('click',() => modalEle.classList.remove('is-active'));
-function onClickTime() {
+function onClickTimeAddEvent() {
     const timeTable = document.getElementsByClassName('td-time');
     const modalEle = document.getElementsByClassName('modal')[1];
     const closeButton = document.getElementsByClassName('delete');
+    let startTimeInput = document.getElementById('start-time');
+    console.log(startTimeInput);
     for (let i = 0; i < timeTable.length; i++) {
         timeTable[i].addEventListener('click', () => {
+            startTimeInput.value = timeTable[i].textContent ?? '';
+            console.log(startTimeInput);
+            //startTimeInput = 'timeTable[i].textContent';
             modalEle.classList.add('is-active');
         });
     }
