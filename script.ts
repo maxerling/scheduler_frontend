@@ -63,7 +63,6 @@ function onClickTimeAddEvent() {
     timeTable[i].addEventListener('click', () => {
       startTimeInput.value = timeTable[i].textContent ?? '';
       console.log(startTimeInput)
-      //startTimeInput = 'timeTable[i].textContent';
       modalEle.classList.add('is-active')
       
     })
