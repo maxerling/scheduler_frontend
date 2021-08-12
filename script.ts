@@ -7,7 +7,7 @@ interface User {
   first_name: string;
   last_name: string;
   role: string;
-  active: boolean;
+  isActive: boolean;
   bookedAppointments: BookingAppointments[];
   date: string;
 
@@ -41,14 +41,17 @@ async function setup() {
 }
 
 async function getData() {
-  await fetch('./users.json', {
+  const username = JSON.parse(localStorage.getItem('user') ?? '');
+  await fetch(`http://localhost:8080/user/${username}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('jwt') ?? '')}`,
+      'Access-Control-Allow-Origin' : '*'
       
     }
   }).then(response => response.json())
-  .then(data => loggedUser = data[0])
+  .then(data => loggedUser = data)
   .catch((err) => console.log(err));
 }
 
@@ -57,8 +60,7 @@ function onClickTimeAddEvent() {
   const modalEle = document.getElementsByClassName('modal')[1];
   const closeButton = document.getElementsByClassName('delete');
   let startTimeInput : HTMLInputElement  = document.getElementById('start-time') as HTMLInputElement;
-  
-  console.log(startTimeInput)
+
   for (let i = 0; i < timeTable.length; i++) {
     timeTable[i].addEventListener('click', () => {
       startTimeInput.value = timeTable[i].textContent ?? '';
@@ -131,7 +133,6 @@ function onClickEvent(event : BookingAppointments, eventEle : HTMLDivElement) {
     const modalCardHeadEle = document.getElementsByClassName('modal-card')[0].children[0]
     const modalCardBodyEle = document.getElementsByClassName('modal-card')[0].children[1]
 
-    console.log()
     
     eventEle.addEventListener('click',() => {
       modalCardHeadEle.children[0].textContent = event.name;

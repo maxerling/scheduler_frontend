@@ -11,13 +11,16 @@ async function setup() {
     onClickTimeAddEvent();
 }
 async function getData() {
-    await fetch('./users.json', {
+    const username = JSON.parse(localStorage.getItem('user') ?? '');
+    await fetch(`http://localhost:8080/user/${username}`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('jwt') ?? '')}`,
+            'Access-Control-Allow-Origin': '*'
         }
     }).then(response => response.json())
-        .then(data => loggedUser = data[0])
+        .then(data => loggedUser = data)
         .catch((err) => console.log(err));
 }
 function onClickTimeAddEvent() {
@@ -25,7 +28,6 @@ function onClickTimeAddEvent() {
     const modalEle = document.getElementsByClassName('modal')[1];
     const closeButton = document.getElementsByClassName('delete');
     let startTimeInput = document.getElementById('start-time');
-    console.log(startTimeInput);
     for (let i = 0; i < timeTable.length; i++) {
         timeTable[i].addEventListener('click', () => {
             startTimeInput.value = timeTable[i].textContent ?? '';
@@ -76,7 +78,6 @@ function onClickEvent(event, eventEle) {
     const modalEle = document.getElementsByClassName('modal')[0];
     const modalCardHeadEle = document.getElementsByClassName('modal-card')[0].children[0];
     const modalCardBodyEle = document.getElementsByClassName('modal-card')[0].children[1];
-    console.log();
     eventEle.addEventListener('click', () => {
         modalCardHeadEle.children[0].textContent = event.name;
         modalCardBodyEle.children[0].firstChild.textContent = `${event.start_time}-${event.end_time}`;
