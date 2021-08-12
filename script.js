@@ -4,11 +4,28 @@ var loggedUser;
 /* ---- */
 setup();
 async function setup() {
+    redirectNotUser();
     await getData();
     checkCurrentWeek();
     setupCalenderButtons();
     welcomeMessage(loggedUser);
     onClickTimeAddEvent();
+    logOutButton();
+}
+function redirectNotUser() {
+    const user = localStorage.getItem('user');
+    const jwt = localStorage.getItem('jwt');
+    if (user == null && jwt == null) {
+        window.location.replace("http://localhost:3000/login.html");
+    }
+}
+function logOutButton() {
+    const logoutBtn = document.getElementById('logout');
+    logoutBtn?.addEventListener('click', () => {
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('user');
+        window.location.replace('http://localhost:3000/login.html');
+    });
 }
 async function getData() {
     const username = JSON.parse(localStorage.getItem('user') ?? '');
@@ -36,8 +53,6 @@ function onClickTimeAddEvent() {
         });
     }
     closeButton[1].addEventListener('click', () => modalEle.classList.remove('is-active'));
-}
-function addEventModal() {
 }
 async function createEventElements() {
     loggedUser.bookedAppointments.map((event) => {
