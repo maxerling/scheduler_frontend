@@ -1,5 +1,13 @@
 "use strict";
 formLoginSubmit();
+redirectLoggedUser();
+function redirectLoggedUser() {
+    const user = localStorage.getItem('user');
+    const jwt = localStorage.getItem('jwt');
+    if (user != null && jwt != null) {
+        window.location.replace("http://localhost:3000/scheduler.html");
+    }
+}
 async function formLoginSubmit() {
     const submitEle = document.getElementById('login-submit');
     submitEle?.addEventListener('click', (e) => {
