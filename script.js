@@ -11,6 +11,44 @@ async function setup() {
     welcomeMessage(loggedUser);
     onClickTimeAddEvent();
     logOutButton();
+    addEventSubmit();
+}
+function addEventSubmit() {
+    const addEventForm = document.getElementById('add-event');
+    const nameInput = addEventForm?.children[0].children[1].children[0];
+    const dateInput = addEventForm?.children[1].children[1].children[0];
+    const startTimeInput = addEventForm?.children[2].children[1].children[0];
+    const endTimeInput = addEventForm?.children[3].children[1].children[0];
+    const descInput = addEventForm?.children[4].children[1].children[0];
+    const submitBtn = addEventForm?.children[5];
+    const erroerMessages = document.getElementsByClassName('error-message');
+    submitBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (emptyValidation(addEventForm, erroerMessages)) {
+        }
+    });
+}
+function emptyValidation(addEventForm, errorMessage) {
+    for (let i = 0; i < 4; i++) {
+        const field = addEventForm?.children[i].children[1].children[0];
+        if (!emptyField(field.value)) {
+            errorMessage[i].style.display = 'none';
+            if (i == 4) {
+                return true;
+            }
+        }
+        else {
+            errorMessage[i].style.display = 'flex';
+            errorMessage[i].textContent = 'This field is required';
+        }
+    }
+    return false;
+}
+function emptyField(valueField) {
+    if (valueField == '') {
+        return true;
+    }
+    return false;
 }
 function redirectNotUser() {
     const user = localStorage.getItem('user');

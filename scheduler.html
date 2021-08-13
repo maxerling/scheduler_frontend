@@ -13,7 +13,7 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Modal title</p>
+        <p class="modal-card-title"></p>
         <button class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body p-4">
@@ -31,12 +31,13 @@
         <button class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
-        <form id='add-event'>
+        <form id='add-event' novalidate>
         <div class="field">
           <label class="label">Name*</label>
           <div class="control">
-            <input class="input" type="text" placeholder="Name">
+            <input class="input" type="text" placeholder="Name" >
           </div>
+          <div class='error-message'>This field is required</div>
         </div>
         
         <!-- <div class="field">
@@ -51,13 +52,15 @@
           <div class="control">
             <input class="input" type="text" placeholder="2021-08-28">
           </div>
+          <div class='error-message'>This field is required</div>
         </div>
         
         <div class="field">
           <label class="label">Start time*</label>
           <div class="control">
-            <input id='start-time' class="input" type="email" value='' placeholder="04:00">
+            <input id='start-time' class="input" type="text" value='' placeholder="04:00">
           </div>
+          <div class='error-message'>This field is required</div>
         </div>
 
         <div class="field">
@@ -65,6 +68,7 @@
           <div class="control">
             <input class="input" type="text" placeholder="22:00">
           </div>
+          <div class='error-message'>This field is required</div>
         </div>
 
         <div class="field">

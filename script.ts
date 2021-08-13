@@ -40,6 +40,56 @@ async function setup() {
   welcomeMessage(loggedUser);
   onClickTimeAddEvent();
   logOutButton();
+  addEventSubmit();
+}
+
+function addEventSubmit() {
+  const addEventForm = document.getElementById('add-event')!;
+  const nameInput : HTMLInputElement = addEventForm?.children[0].children[1].children[0] as HTMLInputElement;
+  const dateInput : HTMLInputElement  = addEventForm?.children[1].children[1].children[0] as HTMLInputElement;
+  const startTimeInput : HTMLInputElement  = addEventForm?.children[2].children[1].children[0] as HTMLInputElement;
+  const endTimeInput : HTMLInputElement  = addEventForm?.children[3].children[1].children[0] as HTMLInputElement;
+  const descInput : HTMLInputElement  = addEventForm?.children[4].children[1].children[0] as HTMLInputElement;
+  const submitBtn = addEventForm?.children[5];
+  const erroerMessages = document.getElementsByClassName('error-message') as HTMLCollectionOf<HTMLElement>;
+
+  submitBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    
+      if (emptyValidation(addEventForm,erroerMessages)) {
+        
+      }
+    
+  })
+}
+
+function emptyValidation(addEventForm : HTMLElement ,errorMessage : HTMLCollectionOf<HTMLElement>) {
+  for (let i = 0; i < 4; i++)  {
+    const field = addEventForm?.children[i].children[1].children[0] as HTMLInputElement;
+   if (!emptyField(field.value)) {
+      errorMessage[i].style.display = 'none';
+      if (i == 4) {
+        return true;
+      }
+      
+    } else {
+      errorMessage[i].style.display = 'flex';
+      errorMessage[i].textContent = 'This field is required';
+      
+    }
+  }
+
+  return false;
+}
+
+function emptyField(valueField : string) {
+
+  if (valueField == '') {
+    return true;
+  }
+
+  return false;
+
 }
 
 function redirectNotUser() {
