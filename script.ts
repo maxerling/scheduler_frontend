@@ -27,7 +27,6 @@ interface BookingAppointments {
 /* GLOBAL */
 var loggedUser : User;
 
-
 /* ---- */
 
 setup()
@@ -55,34 +54,54 @@ function addEventSubmit() {
 
   submitBtn?.addEventListener('click', (e) => {
     e.preventDefault();
-    
-      if (emptyValidation(addEventForm,erroerMessages)) {
-        
+      if (!isEmptyValidaiton(addEventForm,erroerMessages)) {
+        const body = {
+          'name' : `${nameInput.value}`,
+          'date' : `${dateInput.value}`,
+          'start_time' : `${startTimeInput.value}`,
+          'end_time' : `${endTimeInput.value}`,
+          'description' : `${descInput.value}`,
+          'user' : {
+            "id" : loggedUser.id,
+            "username" : loggedUser.username,
+          },
+        }
+
+        fetch('http://localhost:8080/event/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('jwt') ?? '')}`,
+            'Access-Control-Allow-Origin' : '*',        
+          },
+          body : JSON.stringify(body)
+        })
       }
     
   })
 }
 
-function emptyValidation(addEventForm : HTMLElement ,errorMessage : HTMLCollectionOf<HTMLElement>) {
+function isEmptyValidaiton(addEventForm : HTMLElement ,errorMessage : HTMLCollectionOf<HTMLElement>) {
+  let j = 0;
   for (let i = 0; i < 4; i++)  {
     const field = addEventForm?.children[i].children[1].children[0] as HTMLInputElement;
-   if (!emptyField(field.value)) {
+   if (!isEmptyField(field.value)) {
       errorMessage[i].style.display = 'none';
-      if (i == 4) {
-        return true;
-      }
-      
     } else {
       errorMessage[i].style.display = 'flex';
       errorMessage[i].textContent = 'This field is required';
-      
+      j++;
     }
+  }
+
+  if (j > 0) {
+    return true;
   }
 
   return false;
 }
 
-function emptyField(valueField : string) {
+function isEmptyField(valueField : string) {
 
   if (valueField == '') {
     return true;
@@ -136,7 +155,6 @@ function onClickTimeAddEvent() {
   for (let i = 0; i < timeTable.length; i++) {
     timeTable[i].addEventListener('click', () => {
       startTimeInput.value = timeTable[i].textContent ?? '';
-      console.log(startTimeInput)
       modalEle.classList.add('is-active')
       
     })
